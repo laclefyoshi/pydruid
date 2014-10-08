@@ -23,7 +23,13 @@ class Filter:
             self.filter = {"filter": {"type": "selector",
                                       "dimension": args["dimension"],
                                       "value": args["value"]}}
-
+        elif args["type"] == "in":
+            fields=[ {"type": "selector", 
+                              "dimension": args["dimension"],
+                              "value": val} for val in args["value"] ]
+                              
+            self.filter={"filter": {"type": "or",
+                                      "fields": fields}}
         elif args["type"] == "and":
             self.filter = {"filter": {"type": "and",
                                       "fields": args["fields"]}}
@@ -35,6 +41,8 @@ class Filter:
         elif args["type"] == "not":
             self.filter = {"filter": {"type": "not",
                                       "field": args["field"]}}
+                                      
+       
         else:
             raise NotImplemented(
                 'Filter type: {0} does not exist'.format(args['type']))
