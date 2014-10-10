@@ -52,6 +52,15 @@ class Postaggregator:
         return [rename_postagg(new_name, postagg.post_aggregator)
                 for (new_name, postagg) in postaggs.iteritems()]
 
+class Javascript(Postaggregator):    
+    def __init__(self, function, fieldNames, name):
+        Postaggregator.__init__(self, None, None, name)
+    
+        self.post_aggregator={  'type': 'javascript',
+                                'name': name,
+                                'function': function,
+                                'fieldNames': fieldNames}
+
 
 class Field(Postaggregator):
     def __init__(self, name):
