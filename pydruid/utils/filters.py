@@ -41,7 +41,10 @@ class Filter:
         elif args["type"] == "not":
             self.filter = {"filter": {"type": "not",
                                       "field": args["field"]}}
-                                      
+        elif args["type"] == "spatial":
+            self.filter = {"filter": {"type": "spatial",
+                                      "dimension": args["dimension"],
+                                      "bound": args["bound"].bound["bound"]}}
        
         else:
             raise NotImplemented(
@@ -72,4 +75,23 @@ class Dimension:
 
     def __eq__(self, other):
         return Filter(dimension=self.dimension, value=other)
+
+
+class Bound:
+    def __init__(self, **args):
+        if args["type"] == "rectangular":
+            self.bound = {"bound": {"type": "rectangular",
+                                    "minCoords": args["minCoords"],
+                                    "maxCoords": args["maxCoords"]}}
+        elif args["type"] == "radius":
+            self.bound = {"bound": {"type": "radius",
+                                    "coords": args["coords"],
+                                    "radius": args["radius"]}}
+        else:
+            raise NotImplemented(
+                'Bound type: {0} does not exist'.format(args['type']))
+
+    @staticmethod
+    def build_bound(bound_obj):
+        return bound_obj.bound['bound']
 
