@@ -27,6 +27,7 @@ from utils.postaggregator import *
 from utils.filters import *
 from utils.having import *
 from utils.query_utils import *
+from utils.search_query import *
 
 
 class PyDruid:
@@ -292,6 +293,8 @@ class PyDruid:
                 query_dict[key] = Filter.build_filter(val)
             elif key == "having":
                 query_dict[key] = Having.build_having(val)
+            elif key == "query":
+                query_dict[key] = SearchQuery.build_search_query(val)
             else:
                 query_dict[key] = val
 
@@ -547,6 +550,51 @@ class PyDruid:
         valid_parts = [
             'datasource', 'granularity', 'filter', 'dimensions', 'metrics',
             'paging_spec', 'intervals'
+        ]
+        self.validate_query(valid_parts, kwargs)
+        self.build_query(kwargs)
+        return self.__post(self.query_dict)
+
+    def search(self, **kwargs):
+        """
+        A search query returns dimension values that match the search specification.
+
+        Required key/value pairs:
+
+        :param str datasource: Data source to query
+        :param str granularity: Time bucket to aggregate data by hour, day, minute, etc.
+        :param intervals: ISO-8601 intervals for which to run the query on
+        :type intervals: str or list
+        :param pydruid.utils.search_query.SearchQuery query: Search query
+
+        Optional key/value pairs:
+
+        :param pydruid.utils.filters.Filter filter: Indicates which rows of data to include in the query
+        :param list searchDimensions: The list of dimensions to select. If left empty, all dimensions are returned
+        :param dict sort: Sorting order {"type": "lexicographic"} or {"type": "strlen"}
+        :param dict context: Additional JSONObject
+
+        :return: The query result
+        :rtype: list[dict]
+
+        Example:
+
+        .. code-block:: python
+            :linenos:
+
+                >>> raw_data = query.search(
+                        datasource='twitterstream',
+                        granularity='all',
+                        intervals='2013-06-14/pt1h',
+                        query=SearchQuery(type="insensitive_contains", value="Ke")
+                    )
+                >>> print raw_data
+                >>> [{'timestamp': '2013-06-14T00:00:00.000Z', 'result': [{'dimension': 'text', 'value': 'I like the Shish Kebob'}]}]
+        """
+        self.query_type = 'search'
+        valid_parts = [
+            'datasource', 'granularity', 'filter', 'query', 'searchDimensions',
+            'sort', 'context', 'intervals'
         ]
         self.validate_query(valid_parts, kwargs)
         self.build_query(kwargs)
