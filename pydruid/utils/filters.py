@@ -41,8 +41,6 @@ class Filter:
         elif args["type"] == "not":
             self.filter = {"filter": {"type": "not",
                                       "field": args["field"]}}
-                                      
-       
         else:
             raise NotImplemented(
                 'Filter type: {0} does not exist'.format(args['type']))

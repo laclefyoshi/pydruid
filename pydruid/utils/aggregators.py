@@ -31,11 +31,23 @@ def max(raw_metric):
     return {"type": "max", "fieldName": raw_metric}
 
 
-def count(raw_metric):
-    return {"type": "count", "fieldName": raw_metric}
+def count():
+    return {"type": "count"}
 
 def hyperunique(raw_metric):
     return {"type": "hyperUnique", "fieldName": raw_metric}
+
+def javascript(field_names, fn_aggregate, fn_combine, fn_reset):
+    return {"type": "javascript",
+            "fieldNames": field_names,
+            "fnAggregate": fn_aggregate,
+            "fnCombine": fn_combine,
+            "fnReset": fn_reset}
+
+def cardinality(field_names, byRow=False):
+    return {"type": "cardinality",
+            "fieldNames": field_names,
+            "byRow": byRow}
 
 def build_aggregators(agg_input):
     return [dict([('name', k)] + v.items())
