@@ -27,9 +27,12 @@ class Filter:
             fields=[ {"type": "selector", 
                               "dimension": args["dimension"],
                               "value": val} for val in args["value"] ]
-                              
-            self.filter={"filter": {"type": "or",
+            self.filter = {"filter": {"type": "or",
                                       "fields": fields}}
+        elif args["type"] == "regex":
+            self.filter = {"filter": {"type": "regex",
+                                      "dimension": args["dimension"],
+                                      "pattern": args["pattern"]}}
         elif args["type"] == "and":
             self.filter = {"filter": {"type": "and",
                                       "fields": args["fields"]}}
@@ -41,11 +44,14 @@ class Filter:
         elif args["type"] == "not":
             self.filter = {"filter": {"type": "not",
                                       "field": args["field"]}}
+        elif args["type"] == "javascript":
+           self.filter = {"filter": {"type": "javascript",
+                                     "dimension": args["dimension"],
+                                     "function": args["function"]}}
         elif args["type"] == "spatial":
             self.filter = {"filter": {"type": "spatial",
                                       "dimension": args["dimension"],
                                       "bound": args["bound"].bound["bound"]}}
-       
         else:
             raise NotImplemented(
                 'Filter type: {0} does not exist'.format(args['type']))
