@@ -51,7 +51,7 @@ class Filter:
                                       "dimension": args["dimension"],
                                       "bound": args["bound"].bound["bound"]}}
         else:
-            raise NotImplemented(
+            raise NotImplementedError(
                 'Filter type: {0} does not exist'.format(args['type']))
 
     def show(self):
@@ -92,7 +92,7 @@ class Bound:
                                     "coords": args["coords"],
                                     "radius": args["radius"]}}
         else:
-            raise NotImplemented(
+            raise NotImplementedError(
                 'Bound type: {0} does not exist'.format(args['type']))
 
     @staticmethod

@@ -25,7 +25,7 @@ class SearchQuery:
             self.search_query = {'query': {'type': 'fragment',
                                            'values': args['values']}}
         else:
-            raise NotImplemented(
+            raise NotImplementedError(
                 'SearchQuery type: {0} does not exist'.format(args['type']))
 
     def show(self):
