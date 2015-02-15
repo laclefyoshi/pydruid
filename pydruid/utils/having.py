@@ -36,7 +36,7 @@ class Having:
             self.having = {'having': {'type': 'not',
                                       'havingSpec': args['havingSpec']}}
         else:
-            raise NotImplemented(
+            raise NotImplementedError(
                 'Having type: {0} does not exist'.format(args['type']))
 
     def show(self):
