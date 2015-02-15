@@ -36,11 +36,9 @@ class Filter:
         elif args["type"] == "and":
             self.filter = {"filter": {"type": "and",
                                       "fields": args["fields"]}}
-
         elif args["type"] == "or":
             self.filter = {"filter": {"type": "or",
                                       "fields": args["fields"]}}
-
         elif args["type"] == "not":
             self.filter = {"filter": {"type": "not",
                                       "field": args["field"]}}

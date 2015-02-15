@@ -69,6 +69,13 @@ class Field(Postaggregator):
             'type': 'fieldAccess', 'fieldName': name}
 
 
+class HyperUniqueCardinality(Postaggregator):
+    def __init__(self, name):
+        Postaggregator.__init__(self, None, None, name)
+        self.post_aggregator = {
+            'type': 'hyperUniqueCardinality', 'fieldName': name}
+
+
 class Const(Postaggregator):
     def __init__(self, value, output_name=None):
 
@@ -76,7 +83,6 @@ class Const(Postaggregator):
             name = 'const'
         else:
             name = output_name
-
         Postaggregator.__init__(self, None, None, name)
         self.post_aggregator = {
             'type': 'constant', 'name': name, 'value': value}
