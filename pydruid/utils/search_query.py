@@ -13,7 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import simplejson as json
+
+try:
+    import json
+except ImportError:
+    import simplejson as json
+    pass
 
 
 class SearchQuery:
