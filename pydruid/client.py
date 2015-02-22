@@ -19,7 +19,8 @@ import urllib2
 try:
     import pandas
 except ImportError:
-    print 'Warning: unable to import Pandas. The export_pandas method will not work.'
+    import sys
+    print >> sys.stderr, 'Warning: unable to import Pandas. The export_pandas method will not work.'
     pass
 
 from utils.aggregators import *
