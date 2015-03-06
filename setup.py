@@ -2,7 +2,7 @@ from setuptools import setup
 import sys
 
 install_requires = []
-if sys.version_info >= (2, 6):
+if sys.version_info < (2, 6):
     install_requires.append("simplejson >= 3.3.0")
 
 setup(
