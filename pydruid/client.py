@@ -348,7 +348,7 @@ class PyDruid:
         valid_parts = [
             'datasource', 'granularity', 'filter', 'aggregations',
             'post_aggregations', 'intervals', 'dimension', 'threshold',
-            'metric'
+            'metric', 'context'
         ]
         self.validate_query(valid_parts, kwargs)
         self.build_query(kwargs)
@@ -392,7 +392,7 @@ class PyDruid:
         self.query_type = 'timeseries'
         valid_parts = [
             'datasource', 'granularity', 'filter', 'aggregations',
-            'post_aggregations', 'intervals'
+            'post_aggregations', 'intervals', 'context'
         ]
         self.validate_query(valid_parts, kwargs)
         self.build_query(kwargs)
@@ -442,7 +442,8 @@ class PyDruid:
         self.query_type = 'groupBy'
         valid_parts = [
             'datasource', 'granularity', 'filter', 'aggregations',
-            'having', 'post_aggregations', 'intervals', 'dimensions'
+            'having', 'post_aggregations', 'intervals', 'dimensions',
+            'context'
         ]
         self.validate_query(valid_parts, kwargs)
         self.build_query(kwargs)
@@ -481,7 +482,7 @@ class PyDruid:
 
         """
         self.query_type = 'segmentMetadata'
-        valid_parts = ['datasource', 'intervals']
+        valid_parts = ['datasource', 'intervals', 'context']
         self.validate_query(valid_parts, kwargs)
         self.build_query(kwargs)
         return self.__post(self.query_dict)
@@ -507,7 +508,7 @@ class PyDruid:
                 >>> [{'timestamp': '2011-09-14T15:00:00.000Z', 'result': {'minTime': '2011-09-14T15:00:00.000Z', 'maxTime': '2014-03-04T23:44:00.000Z'}}]
         """
         self.query_type = 'timeBoundary'
-        valid_parts = ['datasource']
+        valid_parts = ['datasource', 'context']
         self.validate_query(valid_parts, kwargs)
         self.build_query(kwargs)
         return self.__post(self.query_dict)
@@ -550,7 +551,7 @@ class PyDruid:
         self.query_type = 'select'
         valid_parts = [
             'datasource', 'granularity', 'filter', 'dimensions', 'metrics',
-            'paging_spec', 'intervals'
+            'paging_spec', 'intervals', 'context'
         ]
         self.validate_query(valid_parts, kwargs)
         self.build_query(kwargs)
@@ -595,7 +596,7 @@ class PyDruid:
         self.query_type = 'search'
         valid_parts = [
             'datasource', 'granularity', 'filter', 'query', 'searchDimensions',
-            'sort', 'context', 'intervals'
+            'sort', 'context', 'intervals', 'context'
         ]
         self.validate_query(valid_parts, kwargs)
         self.build_query(kwargs)
