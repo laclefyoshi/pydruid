@@ -23,6 +23,7 @@ except ImportError:
     print >> sys.stderr, 'Warning: unable to import Pandas. The export_pandas method will not work.'
     pass
 
+from contextlib import closing
 from utils.aggregators import *
 from utils.postaggregator import *
 from utils.filters import *
@@ -115,10 +116,9 @@ class PyDruid:
                 url = self.url + '/' + self.endpoint
             headers = {'Content-Type': 'application/json'}
             req = urllib2.Request(url, querystr, headers)
-            res = urllib2.urlopen(req)
-            data = res.read()
-            self.result_json = data
-            res.close()
+            with closing(urllib2.urlopen(req)) as res:
+                data = res.read()
+                self.result_json = data
         except urllib2.HTTPError, e:
             err=None
             if e.code==500:
